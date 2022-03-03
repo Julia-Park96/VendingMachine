@@ -1,0 +1,463 @@
+1. 자판기 모양 설정 함수(appearance_of_vendingmachine)
+
+printf("********************************************");
+
+printf("*                                      1. 돈넣기                                                *");
+
+printf("*                                2. 메뉴선택하기                                           *");
+
+printf("*                                   3. 충전하기                                                *");
+
+printf("*                                   4. 관리하기                                                *");
+
+printf("*                                      5. 나가기                                                *");
+
+printf("*                                                                                                      *");
+
+printf("*                                          MENU                                               *");
+
+printf("*                아메리카노 : 3,000원         라떼 : 4,000원               *");
+
+printf("      small : +0원        medium : +500원     large : +1000원   *");
+
+printf("*                      hot : +0원                  ice : +500원                      *");
+
+printf("*     바닐라 시럽 추가 : 300원     초콜릿 시럽 추가 : 400원         *");
+
+printf("*      민트 시럽 추가 : 500원     헤이즐넛 시럽 추가 : 600원        *");
+
+printf("*                                                                                                      *");
+
+printf("********************************************");
+
+2. 구조체 설정
+
+-필요항목 : 자판기 내부에서 얻은 수익금, 사이즈 배열(small, medium, large), 온도 배열(ice, hot), 커피종류(americano, latte), 시럽(vanilla, chocolate, mint, hazelnut)
+
+struct vending_machine{
+
+int total_money;
+
+int temp;
+
+int size;
+
+int kind;
+
+int syrup;
+
+};
+
+​
+
+typedef struct vending_machine VM;
+
+int money = 0;
+
+vending_machine quantitiy[100];
+
+​
+
+3. 입금 입력 받기 - insert_money로 스캔f받기
+
+     메뉴 사이즈 입력, 온도 입력, 커피종류 입력, 시럽 입력을 각각의 함수로 설정 후 현재 값을 올린 후 return
+
+int main(){
+
+int menu = 0;
+
+int insert_money = 0;
+
+int current_money = 0;
+
+while(1){
+
+printf("메뉴를 선택해주세요 : ");
+
+scanf("%d", &menu);
+
+switch(menu){
+
+case 1:printf("돈을 넣어주세요 : ");
+
+scanf("%d", &insert_money);
+
+money = insert_money;
+
+printf("현재금액 : %d원", money); break;
+
+case 2: printf("메뉴를 선택하셨습니다."); get_kind(money); get_size(money); get_temp(money); get_syrup(money); getchar(); getchar(); break;
+
+case 3: printf("%d원을 받아주세요. 감사합니다.", money); getchar(); getchar(); break;
+
+default : printf("다시 입력해주세요"); getchar(); getchar; return;
+
+}
+
+}
+
+}
+
+​
+
+3-1. int get_kind(VM *total_money){
+
+int hot = 0;
+
+int ice = 500;
+
+int menu = 0;
+
+printf("핫과 아이스를 골라주세요 (hot : 1 / ice : 2) :  \n");
+
+scanf("%d", &menu);
+
+switch(menu){
+
+case 1 : money -= hot; 
+
+case 2 : money -= ice;
+
+default : printf("잘못 입력하셨습니다. ") break; return 0;
+
+}
+
+}
+
+4. 출력하기 - 총 금액 출력하고 메뉴 다시 선택하는지 안하는지 물어보기
+
+​
+
+5. 정산 - 입금 머니에서 현재값 제외하고 "~원 거슬렀습니다." 출력  // 자판기에 accum_money 올리기
+
+​
+
+6. 관리1. 남은 갯수 확인하기
+
+7. 관리2. 금액 확인하기
+
+8. 관리3. 충전하기(각각의 돈 빠지기) --> 관리2의 돈도 빠져나가야함
+
+​
+
+​
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+​
+
+#include <stdio.h>
+
+#include <stdlib.h>
+
+​
+
+int insert_money_f(int money, int profit);
+
+void get_menu(int money);
+
+int get_kind(int price);
+
+int get_size(int price);
+
+int paycheck(int total_money, int price);
+
+int check_saving(int a_count, int l_count, int profit);
+
+​
+
+int total_money = 0;
+
+int money = 0;
+
+int price = 0;
+
+int profit = 0;
+
+int insert_money = 0;
+
+int a_count = 10; int l_count = 10;
+
+int ap = 0;
+
+int lp = 0;
+
+​
+
+int main()
+
+{
+
+while(1){
+
+int menu = 0;
+
+printf("***************************************************\n");
+
+printf("* 1. 돈넣기 *\n");
+
+printf("* 2. 메뉴선택하기 *\n");
+
+printf("* 3. 결제하기 *\n");
+
+printf("* 4. 관리하기 *\n");
+
+printf("* 5. 나가기 *\n");
+
+printf("* *\n");
+
+printf("* MENU *\n");
+
+printf("* 아메리카노 : 3,000원 라떼 : 4,000원 *\n");
+
+printf("* small : +0원 medium : +500원 large : +1000원 *\n");
+
+printf("* hot : +0원 ice : +500원 *\n");
+
+printf("* 바닐라시럽 추가 : 300원 초콜릿시럽 추가 : 400원 *\n");
+
+printf("* 민트시럽 추가 : 500원 헤이즐넛시럽 추가 : 600원 *\n");
+
+printf("* *\n");
+
+printf("***************************************************\n");
+
+printf("\n");
+
+printf("필요한 번호를 누르세요 : ");
+
+scanf("%d", &menu);
+
+switch(menu){
+
+case 1: price = 0; insert_money_f(money, profit); getchar(); getchar(); system("cls"); break;
+
+case 2: get_menu(money); getchar(); getchar(); system("cls"); break;
+
+case 3: paycheck(total_money, price); getchar(); getchar(); system("cls"); break;
+
+case 4: check_saving(a_count, l_count, profit); getchar(); getchar(); system("cls"); break;
+
+case 5: printf("프로그램이 종료되었습니다. \n"); getchar(); getchar(); return; break;
+
+default: printf("제대로 된 번호를 입력하세요. \n"); getchar(); getchar(); system("cls"); break;
+
+}
+
+}
+
+return 0;
+
+}
+
+//1. 돈 넣기
+
+int insert_money_f(int money, int profit){
+
+​
+
+printf("입금할 돈의 금액을 입력하세요 : ");
+
+scanf("%d", &insert_money);
+
+total_money += insert_money;
+
+printf("현재 금액은 %d입니다.", total_money);
+
+return total_money;
+
+}
+
+//2. 메뉴선택
+
+void get_menu(int money){
+
+​
+
+price = get_kind(price);
+
+price = get_size(price);
+
+price = get_syrup(price);
+
+​
+
+return price;
+
+}
+
+//2-1. 종류 구하기
+
+int get_kind(int price){
+
+int kind = 0;
+
+int americano = 3000, latte = 4000;
+
+​
+
+printf("종류를 선택하세요 (1. 아메리카노 2. 라떼) : ");
+
+scanf("%d", &kind);
+
+switch(kind){
+
+case 1: price += americano; printf("americano를 선택하셨습니다. 금액은 %d입니다. \n", americano); a_count--;
+
+if(a_count < 0){
+
+printf("재고가 없습니다. 재고를 충전해주세요."); check_saving(a_count, l_count, profit);
+
+}
+
+break;
+
+​
+
+case 2: price += latte; printf("Latte를 선택하셨습니다. 금액은 %d입니다. \n", latte); l_count--;
+
+if(a_count < 0){
+
+printf("재고가 없습니다. 재고를 충전해주세요."); check_saving(a_count, l_count, profit);
+
+}
+
+break;
+
+default: printf("다시 선택하세요."); break;
+
+}
+
+return price;
+
+}
+
+//2-2. 사이즈 구하기
+
+int get_size(int price){
+
+int size = 0;
+
+int small = 0, medium = 500, large = 1000;
+
+printf("사이즈를 선택하세요 (1. small 2. medium 3. large) : ");
+
+scanf("%d", &size);
+
+switch(size){
+
+case 1: price += small; printf("small을 선택하셨습니다. 추가금액은 %d입니다. 금액은 %d입니다.\n", small, price); break;
+
+case 2: price += medium; printf("medium을 선택하셨습니다. 추가금액은 %d입니다. 총금액은 %d입니다.\n", medium, price); break;
+
+case 3: price += large; printf("large를 선택하셨습니다. 추가금액은 %d입니다. 총금액은 %d입니다.\n", large, price); break;
+
+default: printf("다시 선택하세요."); break;
+
+}
+
+return price;
+
+}
+
+//2-3. 시럽 추가
+
+int get_syrup(int price){
+
+int syrup = 0;
+
+int vanilla = 300, chocolate = 400, mint = 500, hazelnut = 600;
+
+​
+
+printf("시럽을 선택하세요.\n");
+
+printf("(1. 바닐라시럽 2. 초콜릿시럽 3. 민트시럽 4. 헤이즐넛 시럽 5. 추가안함) : ");
+
+scanf("%d", &syrup);
+
+switch(syrup){
+
+case 1: price += vanilla; printf("바닐라 시럽을 선택하셨습니다. 추가금액은 %d입니다. 금액은 %d입니다. \n", vanilla, price); break;
+
+case 2: price += chocolate; printf("초콜릿 시럽을 선택하셨습니다. 추가금액은 %d입니다. 금액은 %d입니다. \n", chocolate, price); break;
+
+case 3: price += mint; printf("민트 시럽을 선택하셨습니다. 추가금액은 %d입니다. 금액은 %d입니다. \n", mint, price); break;
+
+case 4: price += hazelnut; printf("헤이즐넛 시럽을 선택하셨습니다. 추가금액은 %d입니다. 금액은 %d입니다. \n", hazelnut, price); break;
+
+case 5: price += 0; printf("아무것도 선택하지 않으셨습니다. 금액은 %d입니다.", price); break;
+
+default: printf("다시 선택하세요."); break;
+
+}
+
+return price;
+
+}
+
+//3. 결제
+
+int paycheck(int total_money, int price){
+
+profit = total_money - price;
+
+if(profit < 0){
+
+printf("%d만큼의 금액이 부족합니다. 충전으로 돌아갑니다. \n", profit);
+
+insert_money_f(total_money, profit);
+
+}
+
+profit += insert_money;
+
+printf("결제하실 금액은 %d입니다. 잔액은 %d입니다. 감사합니다.", price, profit);
+
+return profit;
+
+}
+
+//4. 잔량 확인
+
+int check_saving(int a_count, int l_count, int profit){
+
+int a_price = 1500; int l_price = 2000;
+
+printf("아메리카노 잔량 : %d\n", a_count);
+
+printf("라떼 잔량 : %d \n", l_count);
+
+int sort = 0;
+
+printf("어떤 것을 충전하시겠습니까? (아메리카노(개당 1500원) : 1 / 라떼(개당 2000원) : 2 / 괜찮아요 : 3) : ");
+
+scanf("%d", &sort);
+
+switch(sort){
+
+case 1: printf("얼마나 충전하시겠습니까? : ");
+
+scanf("%d", &ap); a_count += ap; profit -= (a_price*a_count);
+
+printf("충전이 완료되었습니다. 순수익은 %d입니다.", profit);
+
+break;
+
+case 2: printf("얼마나 충전하시겠습니까? : ");
+
+scanf("%d", &lp); l_count += lp; profit -= (l_price*l_count);
+
+printf("충전이 완료되었습니다. 순수익은 %d입니다.", profit);
+
+break;
+
+case 3: printf("메뉴로 돌아갑니다. "); break;
+
+default: printf("잘못입력하셨습니다."); break;
+
+}
+
+return;
+
+}
