@@ -1,0 +1,103 @@
+//2. 메뉴 선택
+
+void select_menu(VEND *sell){
+
+//2-1. 종류 구하기
+
+int kind = 0;
+
+int americano = 3000; int latte = 4000;
+
+printf("메뉴를 선택하세요.(아메리카노 : 1 / 라떼 : 2) :");
+
+scanf("%d", &kind);
+
+switch(kind){
+
+case 1: printf("아메리카노를 선택하셨습니다. 금액은 %d입니다. \n", americano);
+
+sell[i].price += americano; a_count--;
+
+if(a_count<0){
+
+printf("재고가 없습니다. 재고 관리로 넘어갑니다.");
+
+saving_check(sell[i].total_money, a_count, l_count);
+
+}
+
+break;
+
+case 2: printf("라떼를 선택하셨습니다. 금액은 %d입니다. \n", latte);
+
+sell[i].price += latte; l_count--;
+
+if(a_count<0){
+
+printf("재고가 없습니다. 재고 관리로 넘어갑니다.");
+
+saving_check(sell[i].total_money, a_count, l_count);
+
+}
+
+break;
+
+default: printf("다시 선택해주세요. \n"); break;
+
+}
+
+//사이즈 선택
+
+int size = 0;
+
+int small = 0; int medium = 500; int large = 1000;
+
+printf("사이즈를 선택하세요 (1. small 2. medium 3. large) : ");
+
+scanf("%d", &size);
+
+switch(size){
+
+case 1: sell[i].price += small; printf("small을 선택하셨습니다. 추가금액은 %d입니다. 총금액은 %d입니다.\n", small, sell[i].price); break;
+
+case 2: sell[i].price += medium; printf("medium을 선택하셨습니다. 추가금액은 %d입니다. 총금액은 %d입니다.\n", medium, sell[i].price); break;
+
+case 3: sell[i].price += large; printf("large를 선택하셨습니다. 추가금액은 %d입니다. 총금액은 %d입니다.\n", large, sell[i].price); break;
+
+default: printf("다시 선택하세요."); break;
+
+}
+
+//시럽 추가
+
+int syrup = 0;
+
+int vanilla = 300, chocolate = 400, mint = 500, hazelnut = 600;
+
+printf("시럽을 선택하세요.\n");
+
+printf("(1. 바닐라시럽 2. 초콜릿시럽 3. 민트시럽 4. 헤이즐넛 시럽 5. 추가안함) : ");
+
+scanf("%d", &syrup);
+
+switch(syrup){
+
+case 1: sell[i].price += vanilla; printf("바닐라 시럽을 선택하셨습니다. 추가금액은 %d입니다. 총금액은 %d입니다. \n", vanilla, sell[i].price); break;
+
+case 2: sell[i].price += chocolate; printf("초콜릿 시럽을 선택하셨습니다. 추가금액은 %d입니다. 총금액은 %d입니다. \n", chocolate, sell[i].price); break;
+
+case 3: sell[i].price += mint; printf("민트 시럽을 선택하셨습니다. 추가금액은 %d입니다. 총금액은 %d입니다. \n", mint, sell[i].price); break;
+
+case 4: sell[i].price += hazelnut; printf("헤이즐넛 시럽을 선택하셨습니다. 추가금액은 %d입니다. 총금액은 %d입니다. \n", hazelnut, sell[i].price); break;
+
+case 5: sell[i].price += 0; printf("아무것도 선택하지 않으셨습니다. 총금액은 %d입니다.", sell[i].price); break;
+
+default: printf("다시 선택하세요."); break;
+
+}
+
+return sell[i].price;
+
+}
+
+​
