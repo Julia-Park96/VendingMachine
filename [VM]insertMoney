@@ -1,0 +1,19 @@
+//1. 돈넣기
+
+void make_money(VEND *sell){
+
+int insert_money = 0;
+
+printf("충전할 돈을 넣어주세요 : ");
+
+scanf("%d", &insert_money);
+
+sell[i].c_money = sell[i].c_money + insert_money;
+
+printf("현재 금액은 %d원입니다.", sell[i].c_money);
+
+sell[i].total_money = sell[i].c_money;
+
+return;
+
+}
