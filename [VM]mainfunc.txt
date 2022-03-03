@@ -1,0 +1,113 @@
+#include <stdio.h>
+
+#include <stdlib.h>
+
+#define MAX_SIZE 100
+
+struct vending{
+
+int total_money; //총 사용 금액
+
+int input_money; //수입
+
+int output_money; //나가는 돈
+
+int c_money; //자판기에 현재 있는 돈
+
+int price; //커피가격
+
+int profit; //수익
+
+​
+
+};
+
+typedef struct vending VEND;
+
+​
+
+int i = 0; //총 구매횟수
+
+void make_money(VEND *sell);
+
+void select_menu(VEND *sell);
+
+void pay_check(VEND *sell);
+
+int a_count = 10; int l_count = 10;
+
+void saving_check(VEND *sell, int a_count, int l_count);
+
+void plus_saving(VEND *sell, int a_count, int l_count);
+
+​
+
+​
+
+int main()
+
+{
+
+VEND sell[MAX_SIZE] = {0, };
+
+while(1){
+
+int menu = 0;
+
+printf("***************************************************\n");
+
+printf("* 1. 돈넣기 *\n");
+
+printf("* 2. 메뉴선택하기 *\n");
+
+printf("* 3. 결제하기 *\n");
+
+printf("* 4. 관리하기 *\n");
+
+printf("* 5. 나가기 *\n");
+
+printf("***************************************************\n");
+
+printf("* MENU *\n");
+
+printf("* 아메리카노 : 3,000원 라떼 : 4,000원 *\n");
+
+printf("* small : +0원 medium : +500원 large : +1000원 *\n");
+
+printf("* hot : +0원 ice : +500원 *\n");
+
+printf("* 바닐라시럽 추가 : 300원 초콜릿시럽 추가 : 400원 *\n");
+
+printf("* 민트시럽 추가 : 500원 헤이즐넛시럽 추가 : 600원 *\n");
+
+printf("* *\n");
+
+printf("***************************************************\n");
+
+printf("\n");
+
+printf("필요한 번호를 누르세요 : ");
+
+scanf("%d", &menu);
+
+switch(menu){
+
+case 1: make_money(sell); getchar(); getchar(); system("cls"); break;
+
+case 2: select_menu(sell); getchar(); getchar(); system("cls"); break;
+
+case 3: pay_check(sell); getchar(); getchar(); system("cls"); break;
+
+case 4: saving_check(sell, a_count, l_count); getchar(); getchar(); system("cls"); break;
+
+case 5: printf("프로그램이 종료되었습니다. \n"); getchar(); getchar(); return; break;
+
+default: printf("제대로 된 번호를 입력하세요. \n"); getchar(); getchar(); system("cls"); break;
+
+}
+
+}
+
+return 0;
+
+}
