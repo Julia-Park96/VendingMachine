@@ -1,0 +1,51 @@
+//3, 결제하기
+
+void pay_check(VEND *sell){
+
+printf("결제를 진행하겠습니다. \n");
+
+if(sell[i].c_money < sell[i].price){
+
+printf("금액이 부족합니다. 충전화면으로 돌아갑니다. \n");
+
+make_money(sell[i].c_money);
+
+return;
+
+}
+
+else{
+
+sell[i].profit += sell[i].price;
+
+sell[i].c_money = sell[i].total_money - sell[i].price;
+
+printf(". \n");
+
+printf(". \n");
+
+printf(". \n");
+
+printf("결제가 완료되었습니다. 남은 금액은 %d입니다. \n", sell[i].c_money);
+
+}
+
+int order = 0;
+
+printf("추가주문을 하시겠습니까?(예 : 1 / 아니오 : 2) : ");
+
+scanf("%d",&order);
+
+switch(order){
+
+case 1: select_menu(sell); break;
+
+case 2: printf("돈을 거슬러드리겠습니다. 거스름돈은 %d입니다.", sell[i].c_money); sell[i].total_money -= sell[i].c_money; break;
+
+default : printf("제대로 된 값을 입력해주세요. "); break;
+
+}
+
+return;
+
+}
