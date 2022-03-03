@@ -1,0 +1,91 @@
+//4. 관리하기
+
+void saving_check(VEND *sell, int a_count, int l_count){
+
+int checking = 0;
+
+printf("1. 재고 확인 \n");
+
+printf("2. 재고 충전 \n");
+
+printf("3. 총 매출 확인 \n");
+
+printf("4. 순수익 확인 \n");
+
+printf("무엇을 관리하겠습니까? : ");
+
+scanf("%d", &checking);
+
+switch(checking){
+
+case 1: printf("현재 재고 현황 : 아메리카노 : %d / 라떼 : %d \n", a_count, l_count); break;
+
+case 2: plus_saving(sell, a_count, l_count); break;
+
+case 3: printf("총 매출 : %d원", sell[i].total_money); break;
+
+case 4: printf("순수익 : %d원", sell[i].profit); break;
+
+default: printf("다시 입력하세요 \n"); break;
+
+​
+
+return;
+
+}
+
+}
+
+//4-1. 충전하기
+
+void plus_saving(VEND *sell, int a_count, int l_count){
+
+int kind = 0;
+
+int americano = 1500; int latte = 2000;
+
+int ap = 0;
+
+int lp = 0;
+
+printf("무엇을 충전하시겠습니까? (아메리카노 : 1 / 라떼 : 2) : ");
+
+scanf("%d", &kind);
+
+switch(kind){
+
+case 1: printf("아메리카노는 %d원입니다. 몇개를 충전하시겠습니까? : ", americano);
+
+scanf("%d", &ap);
+
+sell[i].profit = sell[i].total_money - americano * ap;
+
+a_count += ap;
+
+printf("재고 보충을 완료하였습니다. 총 소요 금액은 %d입니다. 아메리카노 갯수는 %d입니다. \n", americano * ap, a_count); break;
+
+case 2: printf("라떼는 %d원입니다. 몇개를 충전하시겠습니까? : ", latte);
+
+scanf("%d", &lp);
+
+sell[i].profit = sell[i].total_money - latte * lp;
+
+l_count += lp;
+
+printf("재고 보충을 완료하였습니다. 총 소요 금액은 %d입니다. 라떼 갯수는 %d입니다. \n", latte * lp, l_count); break;
+
+default : printf("잘못 입력하셨습니다."); break;
+
+}
+
+return a_count, l_count;
+
+}
+
++++++++++++++++++++++++++수정해야할 부분++++++++++++++++++++++++++
+
+1. 메뉴 선택할 때 함수로 표현하기
+
+2. 금액부족후 충전할 때 꺼짐 현상
+
+3. a_count, l_count 제대로 값 나오도록
